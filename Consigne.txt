@@ -1,7 +1,8 @@
 Partie Web Service / JAVA :
 
 Créer une application JAX-RS
-Créer un CRUD pour chaque entité en respectant les règles de gestion.En veillant à ne pas pouvoir supprimer des entités qui ont un lien avec d’autre (par exemple : une entité qui à une fk).
+Créer un CRUD pour chaque entité en respectant les règles de gestion.
+En veillant à ne pas pouvoir supprimer des entités qui ont un lien avec d’autre (par exemple : une entité qui à une fk).
 Bien gérer les codes status HTTP.
 Bien architecturer l’application (package par exemple, model, data, domain etc…)
 Commenter son code.
