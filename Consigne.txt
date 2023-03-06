@@ -1,0 +1,35 @@
+Partie Web Service / JAVA :
+
+Créer une application JAX-RS
+Créer un CRUD pour chaque entité en respectant les règles de gestion.En veillant à ne pas pouvoir supprimer des entités qui ont un lien avec d’autre (par exemple : une entité qui à une fk).
+Bien gérer les codes status HTTP.
+Bien architecturer l’application (package par exemple, model, data, domain etc…)
+Commenter son code.
+
+Préparer des exemples d’exécutions des fonctionnalités.
+
+
+Obligatoire avec POSTMAN—————————————————
+
+BONUS - OPTIONNEL :
+Vous me créez un client :
+Avec pour le crud :
+Des formulaires
+Des liens
+Récupérations d’infos avec fetch.
+
+
+—————GIT :
+Impérativement GITER ce que vous faites.
+Il me faut OBLIGATOIREMENT 2 branches (ou plusieurs) et expliquer pourquoi on les utilise.
+Commit : intelligent, justifié avec de bon message.
+A la fin du projet vous devez fournir un document en annexe avec les logs complet du GIT.
+
+
+——Présentation 20 MIN Comprenant :
+une présentation technique et la présentation orale.
+Fournir un PPT de présentation entre 10 et 15 slides max :
+Page de gardeRemerciementsPrésentation de l’équipe
+Sommaire
+Votre présentation
+Vos annexes
