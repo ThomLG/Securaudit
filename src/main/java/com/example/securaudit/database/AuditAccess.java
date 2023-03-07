@@ -11,10 +11,8 @@ public class AuditAccess {
         private final String INSERT = "INSERT INTO Audit (dateDebutAudit, dureeAudit, coutJournalierAudit, idIndustrie, idAuditeur) VALUES(?, ?, ?, ? , ?) ";
         private final String DELETE = "DELETE FROM Audit WHERE idAudit = ?";
         private final String UPDATE = "UPDATE Audit SET dateDebutAudit = ?, dureeAudit = ?, coutJournalierAudit =?, idIndustrie=?, idAuditeur=? WHERE idAudit = ?";
-        private final String GETBYID = "SELECT idAudit, dateDebutAudit, dureeAudit, coutJournalierAudit, Audit.idIndustrie, Audit.idAuditeur, raisonSocialeIndustrie, siretIndustrie, nomAuditeur, prenomAuditeur " +
+        private final String GETBYID = "SELECT idAudit, dateDebutAudit, dureeAudit, coutJournalierAudit, idIndustrie, idAuditeur" +
                 "FROM Audit " +
-                "INNER JOIN Industrie on Industrie.idIndustrie = Audit.idIndustrie " +
-                "INNER JOIN Auditeur on Auditeur.idAuditeur = Audit.idAuditeur " +
                 "WHERE Audit.idAudit = ? ";
     public AuditAccess(DatabaseAccess db) {
         this.db = db;
@@ -26,9 +24,11 @@ public class AuditAccess {
         ) {
             statement.setInt(1, idAuditeur);
             ResultSet result = statement.executeQuery();
+            IndustrieAccess indAccess = new IndustrieAccess(db);
+            AuditeurAccess audAcess = new AuditeurAccess(db);
             if (result.next()) {
-                Industrie industrie = new Industrie(result.getInt(5), result.getString(7), result.getInt(8));
-                Auditeur auditeur = new Auditeur(result.getInt(6), result.getString(9), result.getString(10));
+                Industrie industrie = indAccess.getIndustrieById(result.getInt(5));
+                Auditeur auditeur = audAcess.getAuditeurById(7);
                 Audit audit = new Audit(
                         result.getInt(1),
                         result.getDate(2),

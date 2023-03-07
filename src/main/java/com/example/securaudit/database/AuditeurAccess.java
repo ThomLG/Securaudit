@@ -1,6 +1,7 @@
 package com.example.securaudit.database;
 
 import com.example.securaudit.models.Auditeur;
+import com.example.securaudit.models.Civilite;
 
 
 import java.sql.*;
@@ -11,8 +12,10 @@ public class AuditeurAccess {
         private final String INSERT = "INSERT INTO Auditeur(nomAuditeur, prenomAuditeur) VALUES(? , ?) ";
         private final String DELETE = "DELETE FROM Auditeur WHERE idAuditeur = ?";
         private final String UPDATE = "UPDATE Auditeur SET nomAuditeur = ? , prenomAuditeur = ? WHERE idAuditeur = ?";
-        private final String GETBYID = "SELECT idAuditeur, nomAuditeur, prenomAuditeur FROM Auditeur WHERE idAuditeur = ? ";
-        private final String GETBYNAME = "SELECT idAuditeur, nomAuditeur, prenomAuditeur FROM Auditeur WHERE nomAuditeur = ? ";
+        private final String GETBYID = "SELECT idAuditeur, nomAuditeur, prenomAuditeur, Auditeur.idCivilite, nomCivilite FROM Auditeur" +
+                                        "INNER JOIN Civilite on Auditeur.idCivilite = Civilite.idCivilite" +
+                                        " WHERE idAuditeur = ? ";
+        private final String GETBYNAME = "SELECT idAuditeur, nomAuditeur, prenomAuditeur, idCivilite FROM Auditeur WHERE nomAuditeur = ? AND prenomAuditeur = ? ";
     public AuditeurAccess(DatabaseAccess db) {
         this.db = db;
     }
@@ -74,10 +77,12 @@ public class AuditeurAccess {
             statement.setInt(1, idAuditeur);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
+                Civilite civ = new Civilite(result.getInt(4), result.getString(5));
                 Auditeur auditeur = new Auditeur(
                         result.getInt(1),
                         result.getString(2),
-                        result.getString(3)
+                        result.getString(3),
+                        civ
                 );
                 return auditeur;
             }

@@ -6,11 +6,13 @@ public class Frais {
 
     int idFrais;
     Date dateFrais;
-    int montantFrais;
+    float montantFrais;
     boolean rembourseFrais;
     CategorieFrais categorieFrais;
+    Auditeur auditeur;
+    Audit audit;
 
-    public Frais(int idFrais, Date dateFrais, int montantFrais, boolean rembourseFrais, CategorieFrais categorieFrais) {
+    public Frais(int idFrais, Date dateFrais, float montantFrais, boolean rembourseFrais, Auditeur auditeur, Audit audit, CategorieFrais categorieFrais) {
         this.idFrais = idFrais;
         this.dateFrais = dateFrais;
         this.montantFrais = montantFrais;
@@ -35,7 +37,7 @@ public class Frais {
         this.dateFrais = dateFrais;
     }
 
-    public int getMontantFrais() {
+    public float getMontantFrais() {
         return montantFrais;
     }
 
