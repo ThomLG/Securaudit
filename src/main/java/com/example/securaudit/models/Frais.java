@@ -8,8 +8,9 @@ public class Frais {
     Date dateFrais;
     int montantFrais;
     boolean rembourseFrais;
+    CategorieFrais categorieFrais;
 
-    public Frais(int idFrais, Date dateFrais, int montantFrais, boolean rembourseFrais) {
+    public Frais(int idFrais, Date dateFrais, int montantFrais, boolean rembourseFrais, CategorieFrais categorieFrais) {
         this.idFrais = idFrais;
         this.dateFrais = dateFrais;
         this.montantFrais = montantFrais;
@@ -27,6 +28,8 @@ public class Frais {
     public Date getDateFrais() {
         return dateFrais;
     }
+
+
 
     public void setDateFrais(Date dateFrais) {
         this.dateFrais = dateFrais;
@@ -46,5 +49,13 @@ public class Frais {
 
     public void setRembourseFrais(boolean rembourseFrais) {
         this.rembourseFrais = rembourseFrais;
+    }
+
+    public CategorieFrais getCategorieFrais() {
+        return categorieFrais;
+    }
+
+    public void setCategorieFrais(CategorieFrais categorieFrais) {
+        this.categorieFrais = categorieFrais;
     }
 }

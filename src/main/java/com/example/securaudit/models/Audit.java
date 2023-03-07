@@ -47,7 +47,23 @@ public class Audit {
         return coutJournalierAudit;
     }
 
-    public void setCoutJournalierAudit(int coutJournalierAudit) {
+    public void setCoutJournalierAudit(float coutJournalierAudit) {
         this.coutJournalierAudit = coutJournalierAudit;
+    }
+
+    public Industrie getIndustrie() {
+        return industrie;
+    }
+
+    public void setIndustrie(Industrie industrie) {
+        this.industrie = industrie;
+    }
+
+    public Auditeur getAuditeur() {
+        return auditeur;
+    }
+
+    public void setAuditeur(Auditeur auditeur) {
+        this.auditeur = auditeur;
     }
 }

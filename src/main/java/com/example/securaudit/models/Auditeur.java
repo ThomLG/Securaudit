@@ -2,11 +2,13 @@ package com.example.securaudit.models;
 
 public class Auditeur {
 
-    int idAuditeur;
-    String nomAuditeur;
-    String prenomAuditeur;
+    private int idAuditeur;
+    private String nomAuditeur;
+    private String prenomAuditeur;
 
-    public Auditeur(int idAuditeur, String nomAuditeur, String prenomAuditeur) {
+    private Civilite civilite;
+
+    public Auditeur(int idAuditeur, String nomAuditeur, String prenomAuditeur, Civilite civilite) {
         this.nomAuditeur = nomAuditeur;
         this.prenomAuditeur = prenomAuditeur;
     }
@@ -19,19 +21,27 @@ public class Auditeur {
         this.idAuditeur = idAuditeur;
     }
 
-    public String getnomAuditeur() {
+    public String getNomAuditeur() {
         return nomAuditeur;
     }
 
-    public void setnomAuditeur(String nomAuditeur) {
+    public void setNomAuditeur(String nomAuditeur) {
         this.nomAuditeur = nomAuditeur;
     }
 
-    public String getprenomAuditeur() {
+    public String getPrenomAuditeur() {
         return prenomAuditeur;
     }
 
-    public void setprenomAuditeur(String prenomAuditeur) {
+    public void setPrenomAuditeur(String prenomAuditeur) {
         this.prenomAuditeur = prenomAuditeur;
+    }
+
+    public Civilite getCivilite() {
+        return civilite;
+    }
+
+    public void setCivilite(Civilite civilite) {
+        this.civilite = civilite;
     }
 }
