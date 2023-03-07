@@ -4,12 +4,16 @@ import java.util.Date;
 
 public class Audit {
 
-    int idAudit;
-    Date dateDebut;
-    int dureeAudit;
-    int coutJournalierAudit;
+    private int idAudit;
+    private Date dateDebut;
+    private int dureeAudit;
+    private float coutJournalierAudit;
 
-    public Audit(Date dateDebut, int dureeAudit, int coutJournalierAudit) {
+    private Industrie industrie;
+
+    private Auditeur auditeur;
+
+    public Audit(int idAudit, Date dateDebut, int dureeAudit, float coutJournalierAudit, Industrie industrie, Auditeur auditeur) {
         this.dateDebut = dateDebut;
         this.dureeAudit = dureeAudit;
         this.coutJournalierAudit = coutJournalierAudit;
@@ -39,7 +43,7 @@ public class Audit {
         this.dureeAudit = dureeAudit;
     }
 
-    public int getCoutJournalierAudit() {
+    public float getCoutJournalierAudit() {
         return coutJournalierAudit;
     }
 
