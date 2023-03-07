@@ -9,23 +9,24 @@ import java.sql.*;
 public class AuditeurAccess {
 
         private final DatabaseAccess db;
-        private final String INSERT = "INSERT INTO Auditeur(nomAuditeur, prenomAuditeur) VALUES(? , ?) ";
+        private final String INSERT = "INSERT INTO Auditeur(nomAuditeur, prenomAuditeur, idCivilite) VALUES(? , ?, ?) ";
         private final String DELETE = "DELETE FROM Auditeur WHERE idAuditeur = ?";
         private final String UPDATE = "UPDATE Auditeur SET nomAuditeur = ? , prenomAuditeur = ? WHERE idAuditeur = ?";
-        private final String GETBYID = "SELECT idAuditeur, nomAuditeur, prenomAuditeur, Auditeur.idCivilite, nomCivilite FROM Auditeur" +
-                                        "INNER JOIN Civilite on Auditeur.idCivilite = Civilite.idCivilite" +
+        private final String GETBYID = "SELECT idAuditeur, nomAuditeur, prenomAuditeur, Auditeur.idCivilite, nomCivilite FROM Auditeur " +
+                                        "INNER JOIN Civilite ON Auditeur.idCivilite = Civilite.idCivilite" +
                                         " WHERE idAuditeur = ? ";
-        private final String GETBYNAME = "SELECT idAuditeur, nomAuditeur, prenomAuditeur, idCivilite FROM Auditeur WHERE nomAuditeur = ? AND prenomAuditeur = ? ";
+        private final String GETAUDITEURBYNAME = "SELECT idAuditeur FROM Auditeur WHERE nomAuditeur = ? AND prenomAuditeur = ? ";
     public AuditeurAccess(DatabaseAccess db) {
         this.db = db;
     }
 
-    public int addAuditeur (String nomAuditeur, String prenomAuditeur) {
+    public int addAuditeur (String nomAuditeur, String prenomAuditeur, int idCiviliteAuditeur) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, nomAuditeur);
             statement.setString(2, prenomAuditeur);
+            statement.setInt(3, idCiviliteAuditeur);
             statement.executeUpdate();
             ResultSet result = statement.getGeneratedKeys();
             if (result.next()) {
@@ -52,13 +53,14 @@ public class AuditeurAccess {
         return false;
     }
 
-    public boolean updateAuditeur(int idAuditeur, String nomAuditeur, String prenomAuditeur) {
+    public boolean updateAuditeur(int idAuditeur, String nomAuditeur, String prenomAuditeur, int idCiviliteAuditeur) {
         try(
                 PreparedStatement statement = db.getConnection().prepareStatement(UPDATE);
         ) {
             statement.setString(1, nomAuditeur);
             statement.setString(2, prenomAuditeur);
             statement.setInt(3, idAuditeur);
+            statement.setInt(4, idCiviliteAuditeur);
             statement.executeUpdate();
             int updatedLinesNumber = statement.executeUpdate();
             if (updatedLinesNumber > 0) {
@@ -92,17 +94,16 @@ public class AuditeurAccess {
         return null;
     }
 
-    public int getAuditeurByName(String nomAuditeur, String prenomAuditeur){
+    public int getAuditeurIndexByName(String nomAuditeur, String prenomAuditeur){
         try (
-                PreparedStatement statement = db.getConnection().prepareStatement(GETBYNAME);
+                PreparedStatement statement = db.getConnection().prepareStatement(GETAUDITEURBYNAME);
         ) {
-            statement.setString(2, nomAuditeur);
-            statement.setString(1, prenomAuditeur);
+            statement.setString(1, nomAuditeur);
+            statement.setString(2, prenomAuditeur);
 
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                int person = result.getInt(1);
-                return person;
+                return result.getInt(1);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

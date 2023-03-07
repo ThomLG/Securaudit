@@ -9,8 +9,10 @@ public class Auditeur {
     private Civilite civilite;
 
     public Auditeur(int idAuditeur, String nomAuditeur, String prenomAuditeur, Civilite civilite) {
+        this.idAuditeur = idAuditeur;
         this.nomAuditeur = nomAuditeur;
         this.prenomAuditeur = prenomAuditeur;
+        this.civilite = civilite;
     }
 
     public int getIdAuditeur() {
