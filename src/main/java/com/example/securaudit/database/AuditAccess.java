@@ -44,7 +44,7 @@ public class AuditAccess {
         }
         return null;
     }
-    public int addAuditeur (Date dateDebutAudit, int dureeAudit, float coutJournalierAudit, int idIndustrie, int idAuditeur) {
+    public int addAudit (Date dateDebutAudit, int dureeAudit, float coutJournalierAudit, int idIndustrie, int idAuditeur) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         ) {
@@ -64,7 +64,7 @@ public class AuditAccess {
         return 0;
     }
 
-    public boolean deleteAuditeur(int idAuditeur) {
+    public boolean deleteAudit(int idAuditeur) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(DELETE);
         ) {
@@ -79,7 +79,7 @@ public class AuditAccess {
         return false;
     }
 
-    public boolean updateAuditeur(int idAudit, Date dateDebutAudit, int dureeAudit, float coutJournalierAudit, int idIndustrie, int idAuditeur) {
+    public boolean updateAudit(int idAudit, Date dateDebutAudit, int dureeAudit, float coutJournalierAudit, int idIndustrie, int idAuditeur) {
         try(
                 PreparedStatement statement = db.getConnection().prepareStatement(UPDATE);
         ) {
