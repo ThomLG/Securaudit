@@ -3,12 +3,12 @@ package com.example.securaudit.models;
 public class Auditeur {
 
     int idAuditeur;
-    String lastName;
-    String firstName;
+    String nomAuditeur;
+    String prenomAuditeur;
 
-    public Auditeur(int idAuditeur, String lastName, String firstName) {
-        this.lastName = lastName;
-        this.firstName = firstName;
+    public Auditeur(int idAuditeur, String nomAuditeur, String prenomAuditeur) {
+        this.nomAuditeur = nomAuditeur;
+        this.prenomAuditeur = prenomAuditeur;
     }
 
     public int getIdAuditeur() {
@@ -19,19 +19,19 @@ public class Auditeur {
         this.idAuditeur = idAuditeur;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getnomAuditeur() {
+        return nomAuditeur;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setnomAuditeur(String nomAuditeur) {
+        this.nomAuditeur = nomAuditeur;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getprenomAuditeur() {
+        return prenomAuditeur;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setprenomAuditeur(String prenomAuditeur) {
+        this.prenomAuditeur = prenomAuditeur;
     }
 }
