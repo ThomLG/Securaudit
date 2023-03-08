@@ -14,9 +14,12 @@ public class Audit {
     private Auditeur auditeur;
 
     public Audit(int idAudit, Date dateDebut, int dureeAudit, float coutJournalierAudit, Industrie industrie, Auditeur auditeur) {
+        this.idAudit = idAudit;
         this.dateDebut = dateDebut;
         this.dureeAudit = dureeAudit;
         this.coutJournalierAudit = coutJournalierAudit;
+        this.industrie = industrie;
+        this.auditeur = auditeur;
     }
 
     public int getIdAudit() {

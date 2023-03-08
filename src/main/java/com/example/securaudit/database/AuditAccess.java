@@ -8,11 +8,11 @@ import java.sql.*;
 
 public class AuditAccess {
         private final DatabaseAccess db;
-        private final String INSERT = "INSERT INTO Audit (dateDebutAudit, dureeAudit, coutJournalierAudit, idIndustrie, idAuditeur) VALUES(?, ?, ?, ? , ?) ";
+        private final String INSERT = "INSERT INTO Audit (dateDebutAudit, dureeAudit, coutJournalierAudit, idIndustrie, idAuditeur) VALUES(?, ?, ?, ? , ?)";
         private final String DELETE = "DELETE FROM Audit WHERE idAudit = ?";
-        private final String UPDATE = "UPDATE Audit SET dateDebutAudit = ?, dureeAudit = ?, coutJournalierAudit =?, idIndustrie=?, idAuditeur=? WHERE idAudit = ?";
+        private final String UPDATE = "UPDATE Audit SET dateDebutAudit = ?, dureeAudit = ?, coutJournalierAudit =?, idIndustrie=?, idAuditeur= ? WHERE idAudit = ?";
         private final String GETBYID = "SELECT idAudit, dateDebutAudit, dureeAudit, coutJournalierAudit, idIndustrie, idAuditeur" +
-                "FROM Audit " +
+                " FROM Audit " +
                 "WHERE Audit.idAudit = ? ";
     public AuditAccess(DatabaseAccess db) {
         this.db = db;

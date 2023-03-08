@@ -8,15 +8,15 @@ public class FraisAccess {
         private final DatabaseAccess db;
         private final String INSERT = "INSERT INTO Frais (dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais) VALUES(?, ?, ?, ? , ?, ?) ";
         private final String DELETE = "DELETE FROM Frais WHERE idFrais = ?";
-        private final String UPDATE = "UPDATE Frais SET dateFrais=?, montantFrais=?, rembourseFrais=?, idAuditeur=?, idAudit=?, idCategorieFrais=? WHERE idAudit = ?";
+        private final String UPDATE = "UPDATE Frais SET dateFrais=?, montantFrais=?, rembourseFrais=?, idAuditeur=?, idAudit=?, idCategorieFrais=? WHERE idFrais = ?";
         private final String GETBYID = "SELECT idFrais, dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais" +
-                                        "FROM Frais " +
+                                        " FROM Frais " +
                                         "WHERE idFrais = ? ";
     public FraisAccess(DatabaseAccess db) {
         this.db = db;
     }
 
-    public Audit getFraisById(int idFrais) {
+    public Frais getFraisById(int idFrais) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(GETBYID);
         ) {
@@ -26,9 +26,9 @@ public class FraisAccess {
             AuditAccess auditAccess = new AuditAccess(db);
             CategorieFraisAccess categAccess = new CategorieFraisAccess(db);
             if (result.next()) {
-                Auditeur auditeur = auditorAcess.getAuditeurById(5);
-                Audit audit = auditAccess.getAuditById(6);
-                CategorieFrais categ = categAccess.getCategorieFraisById(7);
+                Auditeur auditeur = auditorAcess.getAuditeurById(result.getInt(5));
+                Audit audit = auditAccess.getAuditById(result.getInt(6));
+                CategorieFrais categ = categAccess.getCategorieFraisById(result.getInt(7));
                 Frais frais = new Frais(
                         result.getInt(1),
                         result.getDate(2),
@@ -38,7 +38,7 @@ public class FraisAccess {
                         audit,
                         categ
                 );
-                return audit;
+                return frais;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

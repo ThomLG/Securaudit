@@ -15,7 +15,7 @@ public class AuditRessource {
     @POST
     @Path("createAudit")
     public Response createAudit(@FormParam("dateDebutAudit") Date dateDebutAudit,
-                                @FormParam("dureeAduit") Integer dureeAudit,
+                                @FormParam("dureeAudit") int dureeAudit,
                                 @FormParam("coutJournalierAudit") float coutJournalierAudit,
                                 @FormParam("idIndustrie") int idIndustrie,
                                 @FormParam("idAuditeur") int idAuditeur
@@ -39,7 +39,7 @@ public class AuditRessource {
     @Path("updateAudit")
     public Response updateAudit(@FormParam("idAudit") int idAudit,
                                 @FormParam("dateDebutAudit") Date dateDebutAudit,
-                                @FormParam("dureeAduit") Integer dureeAudit,
+                                @FormParam("dureeAudit") int dureeAudit,
                                 @FormParam("coutJournalierAudit") float coutJournalierAudit,
                                 @FormParam("idIndustrie") int idIndustrie,
                                 @FormParam("idAuditeur") int idAuditeur)
@@ -47,9 +47,9 @@ public class AuditRessource {
         AuditAccess auditAccess = new AuditAccess(DatabaseAccess.getInstance());
         boolean auditSuccess = auditAccess.updateAudit(idAudit, dateDebutAudit, dureeAudit, coutJournalierAudit, idIndustrie, idAuditeur);
         if (auditSuccess) {
-            return Response.status(Response.Status.OK).entity(true).build();
+            return Response.status(Response.Status.OK).entity(auditSuccess).build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("L'auditeur n'a pas été mise à jour !").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("L'auditeur n'a pas été mis à jour !").build();
         }
     }
 
