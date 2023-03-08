@@ -1,9 +1,7 @@
 package com.example.securaudit.resources;
 
 
-import com.example.securaudit.database.AuditeurAccess;
-import com.example.securaudit.database.CiviliteAccess;
-import com.example.securaudit.database.DatabaseAccess;
+import com.example.securaudit.database.*;
 import com.example.securaudit.models.Auditeur;
 import com.example.securaudit.models.Civilite;
 import jakarta.ws.rs.*;
@@ -57,15 +55,25 @@ public class AuditeurResource {
         try {
             DatabaseAccess.getInstance().getConnection().setAutoCommit(false);
             AuditeurAccess auditeur = new AuditeurAccess(DatabaseAccess.getInstance());
-            boolean auditeurSuccess = auditeur.deleteAuditeur(idAuditeur);
-            if (auditeurSuccess) {
-                DatabaseAccess.getInstance().getConnection().commit();
-                DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
-                return Response.status(Response.Status.OK).entity(true).build();
-            } else {
-                DatabaseAccess.getInstance().getConnection().rollback();
-                DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
-                return Response.status(Response.Status.NOT_FOUND).entity("L'auditeur n'a pas été supprimé ! ").build();
+            AuditAccess auditAccess = new AuditAccess(DatabaseAccess.getInstance());
+            FraisAccess fraisAccess = new FraisAccess(DatabaseAccess.getInstance());
+            int countAudit = auditAccess.countAuditByAuditeur(idAuditeur);
+            int countFrais = fraisAccess.countFraisByAuditeur(idAuditeur);
+            if (countAudit !=0) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("L'auditeur n'a pas été supprimé, car il est utilisé dans un audit.").build();
+            } else if (countFrais != 0) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("L'auditeur n'a pas été supprimé, car il est utilisé dans un frais.").build();
+            } else{
+                boolean auditeurSuccess = auditeur.deleteAuditeur(idAuditeur);
+                if (auditeurSuccess) {
+                    DatabaseAccess.getInstance().getConnection().commit();
+                    DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
+                    return Response.status(Response.Status.OK).entity(true).build();
+                } else {
+                    DatabaseAccess.getInstance().getConnection().rollback();
+                    DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
+                    return Response.status(Response.Status.NOT_FOUND).entity("L'auditeur n'a pas été supprimé ! ").build();
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

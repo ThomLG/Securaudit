@@ -59,15 +59,21 @@ public class AuditRessource {
         try {
             DatabaseAccess.getInstance().getConnection().setAutoCommit(false);
             AuditAccess audit = new AuditAccess(DatabaseAccess.getInstance());
-            boolean auditSuccess = audit.deleteAudit(idAudit);
-            if (auditSuccess) {
-                DatabaseAccess.getInstance().getConnection().commit();
-                DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
-                return Response.status(Response.Status.OK).entity(true).build();
+            FraisAccess fraisAccess = new FraisAccess(DatabaseAccess.getInstance());
+            int count = fraisAccess.countFraisByAudit(idAudit);
+            if (count !=0) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("L'audit n'a pas été supprimé, car il est utilisé dans un frais.").build();
             } else {
-                DatabaseAccess.getInstance().getConnection().rollback();
-                DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
-                return Response.status(Response.Status.NOT_FOUND).entity("L'audit n'a pas été supprimé ! ").build();
+                boolean auditSuccess = audit.deleteAudit(idAudit);
+                if (auditSuccess) {
+                    DatabaseAccess.getInstance().getConnection().commit();
+                    DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
+                    return Response.status(Response.Status.OK).entity(true).build();
+                } else {
+                    DatabaseAccess.getInstance().getConnection().rollback();
+                    DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
+                    return Response.status(Response.Status.NOT_FOUND).entity("L'audit n'a pas été supprimé ! ").build();
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

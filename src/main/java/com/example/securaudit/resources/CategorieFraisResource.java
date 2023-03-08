@@ -1,13 +1,15 @@
 package com.example.securaudit.resources;
 
 
-import com.example.securaudit.database.CategorieFraisAccess;
-import com.example.securaudit.database.DatabaseAccess;
+import com.example.securaudit.database.*;
 import com.example.securaudit.models.CategorieFrais;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
+
+import java.sql.SQLException;
 
 @Path("categorieFrais")
 public class CategorieFraisResource
@@ -27,6 +29,31 @@ public class CategorieFraisResource
 
     }
 
-
+    @DELETE
+    @Path("deleteCategorieFraisById")
+    public Response deleteCategorieFraisById(@QueryParam("idCategorie") int idCategorie) {
+        try {
+            DatabaseAccess.getInstance().getConnection().setAutoCommit(false);
+            FraisAccess fraisAcess = new FraisAccess(DatabaseAccess.getInstance());
+            CategorieFraisAccess categAccess = new CategorieFraisAccess(DatabaseAccess.getInstance());
+            int count = fraisAcess.countFraisByCategorie(idCategorie);
+            if (count != 0) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Cette catégorie ne peut pas être supprimée car elle est utilisée par des frais").build();
+            } else {
+                boolean categSuccess = categAccess.deleteCategorieFrais(idCategorie);
+                if (categSuccess) {
+                    DatabaseAccess.getInstance().getConnection().commit();
+                    DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
+                    return Response.status(Response.Status.OK).entity(true).build();
+                } else {
+                    DatabaseAccess.getInstance().getConnection().rollback();
+                    DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
+                    return Response.status(Response.Status.NOT_FOUND).entity("La civilité n'a pas été supprimée ! ").build();
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

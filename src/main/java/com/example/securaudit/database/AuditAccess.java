@@ -14,6 +14,8 @@ public class AuditAccess {
         private final String GETBYID = "SELECT idAudit, dateDebutAudit, dureeAudit, coutJournalierAudit, idIndustrie, idAuditeur" +
                 " FROM Audit " +
                 "WHERE Audit.idAudit = ? ";
+        private final String COUNTAUDITBYAUDITEUR = "SELECT COUNT(*) FROM Audit WHERE idAuditeur = ?";
+        private final String COUNTAUDITBYINDUSTRIE = "SELECT COUNT(*) FROM Audit WHERE idIndustrie = ?";
     public AuditAccess(DatabaseAccess db) {
         this.db = db;
     }
@@ -100,4 +102,33 @@ public class AuditAccess {
         return false;
     }
 
+    public int countAuditByAuditeur(int idAuditeur) {
+        try (
+                PreparedStatement statement = db.getConnection().prepareStatement(COUNTAUDITBYAUDITEUR);
+        ) {
+            statement.setInt(1, idAuditeur);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
+
+    public int countAuditByIndustrie(int idIndus) {
+        try (
+                PreparedStatement statement = db.getConnection().prepareStatement(COUNTAUDITBYINDUSTRIE);
+        ) {
+            statement.setInt(1, idIndus);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
 }

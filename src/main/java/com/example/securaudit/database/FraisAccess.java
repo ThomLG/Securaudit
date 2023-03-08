@@ -12,6 +12,10 @@ public class FraisAccess {
         private final String GETBYID = "SELECT idFrais, dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais" +
                                         " FROM Frais " +
                                         "WHERE idFrais = ? ";
+
+        private final String COUNTFRAISBYCATEGORIE = "SELECT COUNT(*) FROM Frais WHERE idCategorieFrais = ?";
+        private final String COUNTFRAISBYAUDITEUR = "SELECT COUNT(*) FROM Frais WHERE idAuditeur = ?";
+        private final String COUNTFRAISBYAUDIT = "SELECT COUNT(*) FROM Frais WHERE idAudit = ?";
     public FraisAccess(DatabaseAccess db) {
         this.db = db;
     }
@@ -103,4 +107,48 @@ public class FraisAccess {
         return false;
     }
 
+    public int countFraisByCategorie(int idCateg) {
+        try (
+                PreparedStatement statement = db.getConnection().prepareStatement(COUNTFRAISBYCATEGORIE);
+        ) {
+            statement.setInt(1, idCateg);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
+
+    public int countFraisByAuditeur(int idAuditeur) {
+        try (
+                PreparedStatement statement = db.getConnection().prepareStatement(COUNTFRAISBYAUDITEUR);
+        ) {
+            statement.setInt(1, idAuditeur);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
+
+    public int countFraisByAudit(int idAudit) {
+        try (
+                PreparedStatement statement = db.getConnection().prepareStatement(COUNTFRAISBYAUDIT);
+        ) {
+            statement.setInt(1, idAudit);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
 }

@@ -16,6 +16,9 @@ public class AuditeurAccess {
                                         "INNER JOIN Civilite ON Auditeur.idCivilite = Civilite.idCivilite" +
                                         " WHERE idAuditeur = ? ";
         private final String GETAUDITEURBYNAME = "SELECT idAuditeur FROM Auditeur WHERE nomAuditeur = ? AND prenomAuditeur = ? ";
+
+        private final String COUNTAUDITEURBYCIV = "SELECT COUNT(*) FROM Auditeur WHERE idCivilite = ?";
+
     public AuditeurAccess(DatabaseAccess db) {
         this.db = db;
     }
@@ -101,6 +104,21 @@ public class AuditeurAccess {
             statement.setString(1, nomAuditeur);
             statement.setString(2, prenomAuditeur);
 
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
+
+    public int countAuditeurByCivilite(int idCiv) {
+        try (
+                PreparedStatement statement = db.getConnection().prepareStatement(COUNTAUDITEURBYCIV);
+        ) {
+            statement.setInt(1, idCiv);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
                 return result.getInt(1);

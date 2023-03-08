@@ -1,9 +1,6 @@
 package com.example.securaudit.resources;
 
-import com.example.securaudit.database.AuditeurAccess;
-import com.example.securaudit.database.CiviliteAccess;
-import com.example.securaudit.database.DatabaseAccess;
-import com.example.securaudit.database.IndustrieAccess;
+import com.example.securaudit.database.*;
 import com.example.securaudit.models.Auditeur;
 import com.example.securaudit.models.Civilite;
 import com.example.securaudit.models.Industrie;
@@ -50,15 +47,21 @@ public class IndustrieResource {
         try {
             DatabaseAccess.getInstance().getConnection().setAutoCommit(false);
             IndustrieAccess industrie = new IndustrieAccess(DatabaseAccess.getInstance());
-            boolean industrieSuccess = industrie.deleteIndustrie(idIndustrie);
-            if (industrieSuccess) {
-                DatabaseAccess.getInstance().getConnection().commit();
-                DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
-                return Response.status(Response.Status.OK).entity(true).build();
+            AuditAccess auditAccess = new AuditAccess(DatabaseAccess.getInstance());
+            int count = auditAccess.countAuditByIndustrie(idIndustrie);
+            if (count != 0) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("L'industrie n'a pas été supprimée, car elle est utilisée dans un audit.").build();
             } else {
-                DatabaseAccess.getInstance().getConnection().rollback();
-                DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
-                return Response.status(Response.Status.NOT_FOUND).entity("L'industrie n'a pas été supprimée ! ").build();
+                boolean industrieSuccess = industrie.deleteIndustrie(idIndustrie);
+                if (industrieSuccess) {
+                    DatabaseAccess.getInstance().getConnection().commit();
+                    DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
+                    return Response.status(Response.Status.OK).entity(true).build();
+                } else {
+                    DatabaseAccess.getInstance().getConnection().rollback();
+                    DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
+                    return Response.status(Response.Status.NOT_FOUND).entity("L'industrie n'a pas été supprimée ! ").build();
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
