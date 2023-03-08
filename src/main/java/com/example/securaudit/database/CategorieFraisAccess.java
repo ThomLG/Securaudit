@@ -18,6 +18,11 @@ public class CategorieFraisAccess {
         this.db = db;
     }
 
+    /**
+     * Créé une catégorie de frais.
+     * @param nomCategorieFrais Le nom de la catégorie de frais
+     * @return L'id de la catégorie de frais créée, 0 sinon
+     */
     public int addCategorieFrais (String nomCategorieFrais) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
@@ -34,6 +39,11 @@ public class CategorieFraisAccess {
         return 0;
     }
 
+    /**
+     * Supprime une catégorie de frais.
+     * @param idCategorieFrais L'id de la catégorie de frais à supprimer
+     * @return true si supprimé, false sinon
+     */
     public boolean deleteCategorieFrais(int idCategorieFrais) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(DELETE);
@@ -49,6 +59,12 @@ public class CategorieFraisAccess {
         return false;
     }
 
+    /**
+     * Met à jour une catégorie de frais.
+     * @param idCategorieFrais L'id de la catégorie de frais à modifier
+     * @param nomCategorieFrais Le nouveau nom de la catégorie de frais
+     * @return true si modifié, false sinon
+     */
     public boolean updateCategorieFrais(int idCategorieFrais, String nomCategorieFrais) {
         try(
                 PreparedStatement statement = db.getConnection().prepareStatement(UPDATE);
@@ -66,6 +82,11 @@ public class CategorieFraisAccess {
         return false;
     }
 
+    /**
+     * Recherche une catégorie de frais via son id.
+     * @param idCategorieFrais L'id de la catégorie de frais à rechercher
+     * @return La catégorie de frais si trouvé, null sinon
+     */
     public CategorieFrais getCategorieFraisById(int idCategorieFrais) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(GETBYID);

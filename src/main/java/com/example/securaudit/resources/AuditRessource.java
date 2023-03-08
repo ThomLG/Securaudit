@@ -1,4 +1,5 @@
 package com.example.securaudit.resources;
+
 import com.example.securaudit.database.*;
 import com.example.securaudit.models.Audit;
 import com.example.securaudit.models.Auditeur;
@@ -19,8 +20,7 @@ public class AuditRessource {
                                 @FormParam("coutJournalierAudit") float coutJournalierAudit,
                                 @FormParam("idIndustrie") int idIndustrie,
                                 @FormParam("idAuditeur") int idAuditeur
-                                )
-    {
+    ) {
         AuditAccess auditAccess = new AuditAccess(DatabaseAccess.getInstance());
         AuditeurAccess auditeurAccess = new AuditeurAccess(DatabaseAccess.getInstance());
         IndustrieAccess industrieAccess = new IndustrieAccess(DatabaseAccess.getInstance());
@@ -42,8 +42,7 @@ public class AuditRessource {
                                 @FormParam("dureeAudit") int dureeAudit,
                                 @FormParam("coutJournalierAudit") float coutJournalierAudit,
                                 @FormParam("idIndustrie") int idIndustrie,
-                                @FormParam("idAuditeur") int idAuditeur)
-    {
+                                @FormParam("idAuditeur") int idAuditeur) {
         AuditAccess auditAccess = new AuditAccess(DatabaseAccess.getInstance());
         boolean auditSuccess = auditAccess.updateAudit(idAudit, dateDebutAudit, dureeAudit, coutJournalierAudit, idIndustrie, idAuditeur);
         if (auditSuccess) {
@@ -59,9 +58,10 @@ public class AuditRessource {
         try {
             DatabaseAccess.getInstance().getConnection().setAutoCommit(false);
             AuditAccess audit = new AuditAccess(DatabaseAccess.getInstance());
+            // on ne peut supprimer un audit si il y a encore des frais rattachés
             FraisAccess fraisAccess = new FraisAccess(DatabaseAccess.getInstance());
             int count = fraisAccess.countFraisByAudit(idAudit);
-            if (count !=0) {
+            if (count != 0) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("L'audit n'a pas été supprimé, car il est utilisé dans un frais.").build();
             } else {
                 boolean auditSuccess = audit.deleteAudit(idAudit);

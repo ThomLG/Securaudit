@@ -2,21 +2,18 @@ USE securaudit;
 
 CREATE TABLE Civilite(
    idCivilite INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-   nomCivilite VARCHAR(50) NOT NULL,
-   PRIMARY KEY(idCivilite)
+   nomCivilite VARCHAR(3) NOT NULL
 );
 
 CREATE TABLE CategorieFrais(
    idCategorieFrais INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-   nomCategorieFrais VARCHAR(50) NOT NULL,
-   PRIMARY KEY(idCategorieFrais)
+   nomCategorieFrais VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Industrie(
    idIndustrie INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
    raisonSocialeIndustrie VARCHAR(50) NOT NULL,
-   siretIndustrie BIGINT NOT NULL,
-   PRIMARY KEY(idIndustrie)
+   siretIndustrie CHAR(14) NOT NULL
 );
 
 CREATE TABLE Auditeur(
@@ -24,7 +21,6 @@ CREATE TABLE Auditeur(
    nomAuditeur VARCHAR(50) NOT NULL,
    prenomAuditeur VARCHAR(50),
    idCivilite INT NOT NULL,
-   PRIMARY KEY(idAuditeur),
    FOREIGN KEY(idCivilite) REFERENCES Civilite(idCivilite)
 );
 
@@ -35,7 +31,6 @@ CREATE TABLE Audit(
    coutJournalierAudit FLOAT NOT NULL,
    idIndustrie INT NOT NULL,
    idAuditeur INT NOT NULL,
-   PRIMARY KEY(idAudit),
    FOREIGN KEY(idIndustrie) REFERENCES Industrie(idIndustrie),
    FOREIGN KEY(idAuditeur) REFERENCES Auditeur(idAuditeur)
 );
@@ -48,7 +43,6 @@ CREATE TABLE Frais(
    idAuditeur INT NOT NULL,
    idAudit INT NOT NULL,
    idCategorieFrais INT NOT NULL,
-   PRIMARY KEY(idFrais),
    FOREIGN KEY(idAuditeur) REFERENCES Auditeur(idAuditeur),
    FOREIGN KEY(idAudit) REFERENCES Audit(idAudit),
    FOREIGN KEY(idCategorieFrais) REFERENCES CategorieFrais(idCategorieFrais)
@@ -56,8 +50,8 @@ CREATE TABLE Frais(
 
 
 INSERT INTO Civilite (nomCivilite) VALUES
-("Madame"),
-("Monsieur");
+("Mme"),
+("M.");
 
 
 INSERT INTO Auditeur (nomAuditeur, prenomAuditeur,idCivilite) VALUES
@@ -73,4 +67,4 @@ INSERT INTO CategorieFrais (nomCategorieFrais) VALUES
 ("Restaurant"),
 ("Hôtel"),
 ("Trajet"),
-("Matériel"); 
+("Matériel");

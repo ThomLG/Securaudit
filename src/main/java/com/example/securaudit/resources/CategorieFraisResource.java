@@ -12,12 +12,10 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 
 @Path("categorieFrais")
-public class CategorieFraisResource
-{
+public class CategorieFraisResource {
     @GET
     @Path("getCategorieFraisById")
-
-    public Response getCategorieFraisById(@QueryParam("idCategorieFrais") int idCategorieFrais){
+    public Response getCategorieFraisById(@QueryParam("idCategorieFrais") int idCategorieFrais) {
 
         CategorieFraisAccess categorieFrais = new CategorieFraisAccess(DatabaseAccess.getInstance());
         CategorieFrais categorieFrais1 = categorieFrais.getCategorieFraisById(idCategorieFrais);
@@ -35,6 +33,7 @@ public class CategorieFraisResource
         try {
             DatabaseAccess.getInstance().getConnection().setAutoCommit(false);
             FraisAccess fraisAcess = new FraisAccess(DatabaseAccess.getInstance());
+            // on ne peut supprimer des catégories de frais si il y a encore des frais rattachés
             CategorieFraisAccess categAccess = new CategorieFraisAccess(DatabaseAccess.getInstance());
             int count = fraisAcess.countFraisByCategorie(idCategorie);
             if (count != 0) {

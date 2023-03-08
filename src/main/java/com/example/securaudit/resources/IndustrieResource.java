@@ -14,10 +14,8 @@ public class IndustrieResource {
 
     @POST
     @Path("createIndustrie")
-
     public Response createIndustrie(@FormParam("raisonSocialeIndustrie") String raisonSocialeIndustrie,
-                                   @FormParam("siretIndustrie") int siretIndustrie )
-    {
+                                    @FormParam("siretIndustrie") int siretIndustrie) {
         IndustrieAccess industrie = new IndustrieAccess(DatabaseAccess.getInstance());
         int idIndustrie = industrie.addIndustrie(raisonSocialeIndustrie, siretIndustrie);
         if (idIndustrie == 0) {
@@ -29,9 +27,8 @@ public class IndustrieResource {
     @PUT // POST c'est pour créer, PUT pour update
     @Path("updateIndustrie")
     public Response updateIndustrie(@FormParam("idIndustrie") int idIndustrie,
-                                   @FormParam("raisonSocialeIndustrie") String raisonSocialeSociale,
-                                   @FormParam("siretIndustrie") int siretIndustrie)
-    {
+                                    @FormParam("raisonSocialeIndustrie") String raisonSocialeSociale,
+                                    @FormParam("siretIndustrie") int siretIndustrie) {
         IndustrieAccess industrie = new IndustrieAccess(DatabaseAccess.getInstance());
         boolean industrieSuccess = industrie.updateIndustrie(idIndustrie, raisonSocialeSociale, siretIndustrie);
         if (industrieSuccess) {
@@ -47,6 +44,7 @@ public class IndustrieResource {
         try {
             DatabaseAccess.getInstance().getConnection().setAutoCommit(false);
             IndustrieAccess industrie = new IndustrieAccess(DatabaseAccess.getInstance());
+            // on ne peut supprimer une industrie si il y a encore des audits rattachés
             AuditAccess auditAccess = new AuditAccess(DatabaseAccess.getInstance());
             int count = auditAccess.countAuditByIndustrie(idIndustrie);
             if (count != 0) {
@@ -67,8 +65,6 @@ public class IndustrieResource {
             throw new RuntimeException(e);
         }
     }
-
-
 
     @GET
     @Path("getIndustrieById")

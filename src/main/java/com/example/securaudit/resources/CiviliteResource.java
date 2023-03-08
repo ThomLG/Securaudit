@@ -13,12 +13,10 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 
 @Path("civilite")
-public class CiviliteResource
-{
+public class CiviliteResource {
     @GET
     @Path("getCiviliteById")
-
-    public Response getCiviliteById(@QueryParam("idCivilite") int idCivilite){
+    public Response getCiviliteById(@QueryParam("idCivilite") int idCivilite) {
 
         CiviliteAccess civilite = new CiviliteAccess(DatabaseAccess.getInstance());
         Civilite civilite1 = civilite.getCiviliteById(idCivilite);
@@ -36,6 +34,7 @@ public class CiviliteResource
         try {
             DatabaseAccess.getInstance().getConnection().setAutoCommit(false);
             AuditeurAccess auditeurAcess = new AuditeurAccess(DatabaseAccess.getInstance());
+            // on ne peut supprimer une civilité si il y a encore des auditeurs rattachés
             CiviliteAccess civAccess = new CiviliteAccess(DatabaseAccess.getInstance());
             int count = auditeurAcess.countAuditeurByCivilite(idCivilite);
             if (count != 0) {

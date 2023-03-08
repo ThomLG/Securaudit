@@ -18,7 +18,12 @@ public class CiviliteAccess {
         this.db = db;
     }
 
-    public int addCivilite (String nomCivilite) {
+    /**
+     * Créé une nouvelle civilité.
+     * @param nomCivilite Le nom de la nouvelle civilité
+     * @return L'id de la nouvelle civilité, 0 sinon
+     */
+    public int addCivilite(String nomCivilite) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         ) {
@@ -34,6 +39,11 @@ public class CiviliteAccess {
         return 0;
     }
 
+    /**
+     * Supprime une civilité.
+     * @param idCivilite L'id de la civilité à supprimer
+     * @return true si supprimée, false sinon
+     */
     public boolean deleteCivilite(int idCivilite) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(DELETE);
@@ -49,8 +59,14 @@ public class CiviliteAccess {
         return false;
     }
 
+    /**
+     * Met à jour une civilité.
+     * @param idCivilite L'id de la civilité à modifier
+     * @param nomCivilite Le nouveau nom de la civilité
+     * @return true si modifiée, false sinon
+     */
     public boolean updateCivilite(int idCivilite, String nomCivilite) {
-        try(
+        try (
                 PreparedStatement statement = db.getConnection().prepareStatement(UPDATE);
         ) {
             statement.setString(1, nomCivilite);
@@ -66,6 +82,11 @@ public class CiviliteAccess {
         return false;
     }
 
+    /**
+     * Recherche une civilité via son id.
+     * @param idCivilite L'id de la civilité à rechercher
+     * @return Une civilité si trouvée, null sinon
+     */
     public Civilite getCiviliteById(int idCivilite) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(GETBYID);

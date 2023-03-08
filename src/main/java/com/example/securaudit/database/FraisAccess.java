@@ -5,21 +5,27 @@ import com.example.securaudit.models.*;
 import java.sql.*;
 
 public class FraisAccess {
-        private final DatabaseAccess db;
-        private final String INSERT = "INSERT INTO Frais (dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais) VALUES(?, ?, ?, ? , ?, ?) ";
-        private final String DELETE = "DELETE FROM Frais WHERE idFrais = ?";
-        private final String UPDATE = "UPDATE Frais SET dateFrais=?, montantFrais=?, rembourseFrais=?, idAuditeur=?, idAudit=?, idCategorieFrais=? WHERE idFrais = ?";
-        private final String GETBYID = "SELECT idFrais, dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais" +
-                                        " FROM Frais " +
-                                        "WHERE idFrais = ? ";
+    private final DatabaseAccess db;
+    private final String INSERT = "INSERT INTO Frais (dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais) VALUES(?, ?, ?, ? , ?, ?) ";
+    private final String DELETE = "DELETE FROM Frais WHERE idFrais = ?";
+    private final String UPDATE = "UPDATE Frais SET dateFrais=?, montantFrais=?, rembourseFrais=?, idAuditeur=?, idAudit=?, idCategorieFrais=? WHERE idFrais = ?";
+    private final String GETBYID = "SELECT idFrais, dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais" +
+            " FROM Frais " +
+            "WHERE idFrais = ? ";
 
-        private final String COUNTFRAISBYCATEGORIE = "SELECT COUNT(*) FROM Frais WHERE idCategorieFrais = ?";
-        private final String COUNTFRAISBYAUDITEUR = "SELECT COUNT(*) FROM Frais WHERE idAuditeur = ?";
-        private final String COUNTFRAISBYAUDIT = "SELECT COUNT(*) FROM Frais WHERE idAudit = ?";
+    private final String COUNTFRAISBYCATEGORIE = "SELECT COUNT(*) FROM Frais WHERE idCategorieFrais = ?";
+    private final String COUNTFRAISBYAUDITEUR = "SELECT COUNT(*) FROM Frais WHERE idAuditeur = ?";
+    private final String COUNTFRAISBYAUDIT = "SELECT COUNT(*) FROM Frais WHERE idAudit = ?";
+
     public FraisAccess(DatabaseAccess db) {
         this.db = db;
     }
 
+    /**
+     * Recherche un frais via son id.
+     * @param idFrais L'id du frais à rechercher
+     * @return Un frais si trouvé, null sinon
+     */
     public Frais getFraisById(int idFrais) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(GETBYID);
@@ -49,7 +55,18 @@ public class FraisAccess {
         }
         return null;
     }
-    public int addFrais (Date dateFrais, float montantFrais, boolean rembourseFrais, int idAuditeur, int idAudit, int idCategorieFrais) {
+
+    /**
+     * Créé un frais.
+     * @param dateFrais La date du frais
+     * @param montantFrais Le montant du frais
+     * @param rembourseFrais Le frais a été remboursé ?
+     * @param idAuditeur L'id de l'auditeur auteur du frais
+     * @param idAudit L'id de l'audit engendrant le frais
+     * @param idCategorieFrais L'id de la catégorie du frais
+     * @return L'id du frais nouvellement créé, 0 sinon
+     */
+    public int addFrais(Date dateFrais, float montantFrais, boolean rembourseFrais, int idAuditeur, int idAudit, int idCategorieFrais) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         ) {
@@ -70,6 +87,11 @@ public class FraisAccess {
         return 0;
     }
 
+    /**
+     * Supprime un frais.
+     * @param idFrais L'id du frais à supprimer
+     * @return true si supprimé, false sinon
+     */
     public boolean deleteFrais(int idFrais) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(DELETE);
@@ -85,8 +107,19 @@ public class FraisAccess {
         return false;
     }
 
+    /**
+     * Met à jour un frais
+     * @param idFrais L'id du frais à modifier
+     * @param dateFrais La nouvelle date du frais
+     * @param montantFrais Le nouveau montant du frais
+     * @param rembourseFrais true si remboursé, false sinon
+     * @param idAuditeur Le nouvel id de l'auditeur auteur du frais
+     * @param idAudit Le nouvel id de l'audit engendrant le frais
+     * @param idCategorieFrais Le nouvel id de la catégorie de frais
+     * @return true si modifié, false sinon
+     */
     public boolean updateFrais(int idFrais, Date dateFrais, float montantFrais, boolean rembourseFrais, int idAuditeur, int idAudit, int idCategorieFrais) {
-        try(
+        try (
                 PreparedStatement statement = db.getConnection().prepareStatement(UPDATE);
         ) {
             statement.setDate(1, dateFrais);
@@ -107,6 +140,11 @@ public class FraisAccess {
         return false;
     }
 
+    /**
+     * Compte le nombre de frais rattaché à une catégorie de frais.
+     * @param idCateg L'id de la catégorie de frais
+     * @return Le nombre de frais rattaché à la catégorie de frais spécifiée
+     */
     public int countFraisByCategorie(int idCateg) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(COUNTFRAISBYCATEGORIE);
@@ -122,6 +160,11 @@ public class FraisAccess {
         return 0;
     }
 
+    /**
+     * Compte le nombre de frais rattaché à un auditeur.
+     * @param idAuditeur L'id de l'auditeur
+     * @return Le nombre de frais rattaché à l'auditeur spécifié
+     */
     public int countFraisByAuditeur(int idAuditeur) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(COUNTFRAISBYAUDITEUR);
@@ -137,6 +180,11 @@ public class FraisAccess {
         return 0;
     }
 
+    /**
+     * Compte le nombre de frais rattaché à un audit.
+     * @param idAudit L'id de l'audit
+     * @return Le nombre de frais rattaché à l'audit spécifié
+     */
     public int countFraisByAudit(int idAudit) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(COUNTFRAISBYAUDIT);

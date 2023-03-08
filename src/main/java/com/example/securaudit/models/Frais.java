@@ -17,6 +17,9 @@ public class Frais {
         this.dateFrais = dateFrais;
         this.montantFrais = montantFrais;
         this.rembourseFrais = rembourseFrais;
+        this.auditeur = auditeur;
+        this.audit = audit;
+        this.categorieFrais = categorieFrais;
     }
 
     public int getIdFrais() {
@@ -30,8 +33,6 @@ public class Frais {
     public Date getDateFrais() {
         return dateFrais;
     }
-
-
 
     public void setDateFrais(Date dateFrais) {
         this.dateFrais = dateFrais;
@@ -59,5 +60,25 @@ public class Frais {
 
     public void setCategorieFrais(CategorieFrais categorieFrais) {
         this.categorieFrais = categorieFrais;
+    }
+
+    public void setMontantFrais(float montantFrais) {
+        this.montantFrais = montantFrais;
+    }
+
+    public Auditeur getAuditeur() {
+        return auditeur;
+    }
+
+    public void setAuditeur(Auditeur auditeur) {
+        this.auditeur = auditeur;
+    }
+
+    public Audit getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Audit audit) {
+        this.audit = audit;
     }
 }

@@ -18,7 +18,13 @@ public class IndustrieAccess {
         this.db = db;
     }
 
-    public int addIndustrie (String raisonSocialeIndustrie, int siretIndustrie) {
+    /**
+     * Créé une industrie.
+     * @param raisonSocialeIndustrie La raison sociale de l'industrie
+     * @param siretIndustrie Le numéro SIRET de l'industrie
+     * @return L'id de la nouvelle industrie, 0 sinon
+     */
+    public int addIndustrie(String raisonSocialeIndustrie, int siretIndustrie) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         ) {
@@ -35,6 +41,11 @@ public class IndustrieAccess {
         return 0;
     }
 
+    /**
+     * Supprime une industrie.
+     * @param idIndustrie L'id de l'industrie à supprimer
+     * @return true si supprimée, false sinon
+     */
     public boolean deleteIndustrie(int idIndustrie) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(DELETE);
@@ -50,8 +61,15 @@ public class IndustrieAccess {
         return false;
     }
 
+    /**
+     * Met à jour une industrie.
+     * @param idIndustrie L'id de l'industrie à modifier
+     * @param raisonSocialeIndustrie La nouvelle raison sociale de l'industrie
+     * @param siretIndustrie Le nouveau SIRET de l'industrie
+     * @return true si modifiée, false sinon
+     */
     public boolean updateIndustrie(int idIndustrie, String raisonSocialeIndustrie, int siretIndustrie) {
-        try(
+        try (
                 PreparedStatement statement = db.getConnection().prepareStatement(UPDATE);
         ) {
             statement.setString(1, raisonSocialeIndustrie);
@@ -68,6 +86,11 @@ public class IndustrieAccess {
         return false;
     }
 
+    /**
+     * Recherche une industrie via son id.
+     * @param idIndustrie L'id de l'industrie à rechercher
+     * @return Une industrie si trouvée, null sinon
+     */
     public Industrie getIndustrieById(int idIndustrie) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(GETBYID);

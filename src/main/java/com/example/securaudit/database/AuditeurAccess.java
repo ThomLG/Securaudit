@@ -8,22 +8,29 @@ import java.sql.*;
 
 public class AuditeurAccess {
 
-        private final DatabaseAccess db;
-        private final String INSERT = "INSERT INTO Auditeur(nomAuditeur, prenomAuditeur, idCivilite) VALUES(? , ?, ?) ";
-        private final String DELETE = "DELETE FROM Auditeur WHERE idAuditeur = ?";
-        private final String UPDATE = "UPDATE Auditeur SET nomAuditeur = ? , prenomAuditeur = ? WHERE idAuditeur = ?";
-        private final String GETBYID = "SELECT idAuditeur, nomAuditeur, prenomAuditeur, Auditeur.idCivilite, nomCivilite FROM Auditeur " +
-                                        "INNER JOIN Civilite ON Auditeur.idCivilite = Civilite.idCivilite" +
-                                        " WHERE idAuditeur = ? ";
-        private final String GETAUDITEURBYNAME = "SELECT idAuditeur FROM Auditeur WHERE nomAuditeur = ? AND prenomAuditeur = ? ";
+    private final DatabaseAccess db;
+    private final String INSERT = "INSERT INTO Auditeur(nomAuditeur, prenomAuditeur, idCivilite) VALUES(? , ?, ?) ";
+    private final String DELETE = "DELETE FROM Auditeur WHERE idAuditeur = ?";
+    private final String UPDATE = "UPDATE Auditeur SET nomAuditeur = ? , prenomAuditeur = ? WHERE idAuditeur = ?";
+    private final String GETBYID = "SELECT idAuditeur, nomAuditeur, prenomAuditeur, Auditeur.idCivilite, nomCivilite FROM Auditeur " +
+            "INNER JOIN Civilite ON Auditeur.idCivilite = Civilite.idCivilite" +
+            " WHERE idAuditeur = ? ";
+    private final String GETAUDITEURBYNAME = "SELECT idAuditeur FROM Auditeur WHERE nomAuditeur = ? AND prenomAuditeur = ? ";
 
-        private final String COUNTAUDITEURBYCIV = "SELECT COUNT(*) FROM Auditeur WHERE idCivilite = ?";
+    private final String COUNTAUDITEURBYCIV = "SELECT COUNT(*) FROM Auditeur WHERE idCivilite = ?";
 
     public AuditeurAccess(DatabaseAccess db) {
         this.db = db;
     }
 
-    public int addAuditeur (String nomAuditeur, String prenomAuditeur, int idCiviliteAuditeur) {
+    /**
+     * Créé un nouvel auditeur.
+     * @param nomAuditeur Le nom de l'auditeur
+     * @param prenomAuditeur Le prénom de l'auditeur
+     * @param idCiviliteAuditeur L'id de civilité de l'auditeur
+     * @return L'id de l'auditeur nouvellement créé, 0 sinon
+     */
+    public int addAuditeur(String nomAuditeur, String prenomAuditeur, int idCiviliteAuditeur) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         ) {
@@ -41,6 +48,11 @@ public class AuditeurAccess {
         return 0;
     }
 
+    /**
+     * Supprime un auditeur.
+     * @param idAuditeur L'id de l'auditeur à supprimer
+     * @return true si supprimé, false sinon
+     */
     public boolean deleteAuditeur(int idAuditeur) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(DELETE);
@@ -56,8 +68,16 @@ public class AuditeurAccess {
         return false;
     }
 
+    /**
+     * Met à jour un auditeur
+     * @param idAuditeur L'id de l'auditeur à modifier
+     * @param nomAuditeur Le nouveau nom de l'auditeur
+     * @param prenomAuditeur Le nouveau prénom de l'auditeur
+     * @param idCiviliteAuditeur Le nouvel id de civilité de l'auditeur
+     * @return true si modifié, false sinon
+     */
     public boolean updateAuditeur(int idAuditeur, String nomAuditeur, String prenomAuditeur, int idCiviliteAuditeur) {
-        try(
+        try (
                 PreparedStatement statement = db.getConnection().prepareStatement(UPDATE);
         ) {
             statement.setString(1, nomAuditeur);
@@ -75,6 +95,11 @@ public class AuditeurAccess {
         return false;
     }
 
+    /**
+     * Recherche un auditeur via son ID.
+     * @param idAuditeur L'id de l'auditeur à rechercher
+     * @return Un Auditeur si trouvé, null sinon
+     */
     public Auditeur getAuditeurById(int idAuditeur) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(GETBYID);
@@ -97,7 +122,13 @@ public class AuditeurAccess {
         return null;
     }
 
-    public int getAuditeurIndexByName(String nomAuditeur, String prenomAuditeur){
+    /**
+     * Recherche l'index d'un auditeur via son nom/prénom.
+     * @param nomAuditeur Le nom de l'auditeur à rechercher
+     * @param prenomAuditeur Le prénom de l'auditeur à rechercher
+     * @return L'id de l'auditeur si trouvé, 0 sinon
+     */
+    public int getAuditeurIndexByName(String nomAuditeur, String prenomAuditeur) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(GETAUDITEURBYNAME);
         ) {
@@ -114,6 +145,11 @@ public class AuditeurAccess {
         return 0;
     }
 
+    /**
+     * Compte le nombre d'auditeur d'une certaine civilité.
+     * @param idCiv L'id de la civilité
+     * @return Le nombre d'auditeur de cette civilité
+     */
     public int countAuditeurByCivilite(int idCiv) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(COUNTAUDITEURBYCIV);

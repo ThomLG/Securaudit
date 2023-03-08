@@ -20,7 +20,7 @@ public class FraisResource {
                                 @FormParam("rembourseFrais") boolean rembourseFrais,
                                 @FormParam("idAuditeur") int idAuditeur,
                                 @FormParam("idAudit") int idAudit,
-                                @FormParam("idCategorieFrais") int idCategorieFrais){
+                                @FormParam("idCategorieFrais") int idCategorieFrais) {
         FraisAccess fraisAccess = new FraisAccess(DatabaseAccess.getInstance());
         AuditeurAccess auditeurAccess = new AuditeurAccess(DatabaseAccess.getInstance());
         AuditAccess auditAccess = new AuditAccess(DatabaseAccess.getInstance());
@@ -45,8 +45,7 @@ public class FraisResource {
                                 @FormParam("rembourseFrais") boolean rembourseFrais,
                                 @FormParam("idAuditeur") int idAuditeur,
                                 @FormParam("idAudit") int idAudit,
-                                @FormParam("idCategorieFrais") int idCategorieFrais)
-    {
+                                @FormParam("idCategorieFrais") int idCategorieFrais) {
         FraisAccess fraisAccess = new FraisAccess(DatabaseAccess.getInstance());
         boolean fraisSuccess = fraisAccess.updateFrais(idFrais, dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais);
         if (fraisSuccess) {
