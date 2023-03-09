@@ -53,14 +53,10 @@ public class AuditeurResource {
             DatabaseAccess.getInstance().getConnection().setAutoCommit(false);
             AuditeurAccess auditeur = new AuditeurAccess(DatabaseAccess.getInstance());
             AuditAccess auditAccess = new AuditAccess(DatabaseAccess.getInstance());
-            FraisAccess fraisAccess = new FraisAccess(DatabaseAccess.getInstance());
             // on ne peut supprimer un auditeur que si il n'y a ni audit ni frais rattaché à cet auditeur
             int countAudit = auditAccess.countAuditByAuditeur(idAuditeur);
-            int countFrais = fraisAccess.countFraisByAuditeur(idAuditeur);
             if (countAudit != 0) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("L'auditeur n'a pas été supprimé, car il est utilisé dans un audit.").build();
-            } else if (countFrais != 0) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("L'auditeur n'a pas été supprimé, car il est utilisé dans un frais.").build();
             } else {
                 boolean auditeurSuccess = auditeur.deleteAuditeur(idAuditeur);
                 if (auditeurSuccess) {
