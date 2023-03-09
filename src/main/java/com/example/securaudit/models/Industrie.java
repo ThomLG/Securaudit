@@ -4,9 +4,9 @@ public class Industrie {
 
     int idIndustrie;
     String raisonSocialeIndustrie;
-    int siretIndustrie;
+    long siretIndustrie;
 
-    public Industrie(int idIndustrie, String raisonSocialeIndustrie, int siretIndustrie) {
+    public Industrie(int idIndustrie, String raisonSocialeIndustrie, long siretIndustrie) {
         this.idIndustrie = idIndustrie;
         this.raisonSocialeIndustrie = raisonSocialeIndustrie;
         this.siretIndustrie = siretIndustrie;
@@ -28,11 +28,11 @@ public class Industrie {
         this.raisonSocialeIndustrie = raisonSocialeIndustrie;
     }
 
-    public int getSiretIndustrie() {
+    public long  getSiretIndustrie() {
         return siretIndustrie;
     }
 
-    public void setSiretIndustrie(int siretIndustrie) {
+    public void setSiretIndustrie(long siretIndustrie) {
         this.siretIndustrie = siretIndustrie;
     }
 }

@@ -11,7 +11,7 @@ public class AuditeurAccess {
     private final DatabaseAccess db;
     private final String INSERT = "INSERT INTO Auditeur(nomAuditeur, prenomAuditeur, idCivilite) VALUES(? , ?, ?) ";
     private final String DELETE = "DELETE FROM Auditeur WHERE idAuditeur = ?";
-    private final String UPDATE = "UPDATE Auditeur SET nomAuditeur = ? , prenomAuditeur = ? WHERE idAuditeur = ?";
+    private final String UPDATE = "UPDATE Auditeur SET nomAuditeur = ? , prenomAuditeur = ?, idCivilite = ? WHERE idAuditeur = ?";
     private final String GETBYID = "SELECT idAuditeur, nomAuditeur, prenomAuditeur, Auditeur.idCivilite, nomCivilite FROM Auditeur " +
             "INNER JOIN Civilite ON Auditeur.idCivilite = Civilite.idCivilite" +
             " WHERE idAuditeur = ? ";
@@ -82,8 +82,8 @@ public class AuditeurAccess {
         ) {
             statement.setString(1, nomAuditeur);
             statement.setString(2, prenomAuditeur);
-            statement.setInt(3, idAuditeur);
-            statement.setInt(4, idCiviliteAuditeur);
+            statement.setInt(4, idAuditeur);
+            statement.setInt(3, idCiviliteAuditeur);
             statement.executeUpdate();
             int updatedLinesNumber = statement.executeUpdate();
             if (updatedLinesNumber > 0) {

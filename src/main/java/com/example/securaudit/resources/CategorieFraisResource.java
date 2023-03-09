@@ -47,7 +47,7 @@ public class CategorieFraisResource {
                 } else {
                     DatabaseAccess.getInstance().getConnection().rollback();
                     DatabaseAccess.getInstance().getConnection().setAutoCommit(true);
-                    return Response.status(Response.Status.NOT_FOUND).entity("La civilité n'a pas été supprimée ! ").build();
+                    return Response.status(Response.Status.NOT_FOUND).entity("La catégorie n'a pas été supprimée ! ").build();
                 }
             }
         } catch (SQLException e) {

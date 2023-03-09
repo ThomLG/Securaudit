@@ -40,10 +40,8 @@ CREATE TABLE Frais(
    dateFrais DATE NOT NULL,
    montantFrais FLOAT NOT NULL,
    rembourseFrais BOOLEAN NOT NULL,
-   idAuditeur INT NOT NULL,
    idAudit INT NOT NULL,
    idCategorieFrais INT NOT NULL,
-   FOREIGN KEY(idAuditeur) REFERENCES Auditeur(idAuditeur),
    FOREIGN KEY(idAudit) REFERENCES Audit(idAudit),
    FOREIGN KEY(idCategorieFrais) REFERENCES CategorieFrais(idCategorieFrais)
 );

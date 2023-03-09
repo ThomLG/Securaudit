@@ -23,7 +23,7 @@ public class CiviliteResource {
         if (civilite1 != null) {
             return Response.status(Response.Status.OK).entity(civilite1).build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("La catégorie n'existe pas ! ").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("La civilité n'existe pas ! ").build();
         }
 
     }

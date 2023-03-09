@@ -24,12 +24,12 @@ public class IndustrieAccess {
      * @param siretIndustrie Le numéro SIRET de l'industrie
      * @return L'id de la nouvelle industrie, 0 sinon
      */
-    public int addIndustrie(String raisonSocialeIndustrie, int siretIndustrie) {
+    public int addIndustrie(String raisonSocialeIndustrie, long siretIndustrie) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, raisonSocialeIndustrie);
-            statement.setInt(2, siretIndustrie);
+            statement.setLong(2, siretIndustrie);
             statement.executeUpdate();
             ResultSet result = statement.getGeneratedKeys();
             if (result.next()) {
@@ -68,12 +68,12 @@ public class IndustrieAccess {
      * @param siretIndustrie Le nouveau SIRET de l'industrie
      * @return true si modifiée, false sinon
      */
-    public boolean updateIndustrie(int idIndustrie, String raisonSocialeIndustrie, int siretIndustrie) {
+    public boolean updateIndustrie(int idIndustrie, String raisonSocialeIndustrie, long siretIndustrie) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(UPDATE);
         ) {
             statement.setString(1, raisonSocialeIndustrie);
-            statement.setInt(2, siretIndustrie);
+            statement.setLong(2, siretIndustrie);
             statement.setInt(3, idIndustrie);
             statement.executeUpdate();
             int updatedLinesNumber = statement.executeUpdate();
@@ -101,7 +101,7 @@ public class IndustrieAccess {
                 Industrie Industrie = new Industrie(
                         result.getInt(1),
                         result.getString(2),
-                        result.getInt(3)
+                        result.getLong(3)
                 );
                 return Industrie;
             }

@@ -48,7 +48,7 @@ public class AuditRessource {
         if (auditSuccess) {
             return Response.status(Response.Status.OK).entity(auditSuccess).build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("L'auditeur n'a pas été mis à jour !").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("L'audit n'a pas été mis à jour !").build();
         }
     }
 

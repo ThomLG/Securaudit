@@ -15,7 +15,7 @@ public class IndustrieResource {
     @POST
     @Path("createIndustrie")
     public Response createIndustrie(@FormParam("raisonSocialeIndustrie") String raisonSocialeIndustrie,
-                                    @FormParam("siretIndustrie") int siretIndustrie) {
+                                    @FormParam("siretIndustrie") long siretIndustrie) {
         IndustrieAccess industrie = new IndustrieAccess(DatabaseAccess.getInstance());
         int idIndustrie = industrie.addIndustrie(raisonSocialeIndustrie, siretIndustrie);
         if (idIndustrie == 0) {
@@ -28,7 +28,7 @@ public class IndustrieResource {
     @Path("updateIndustrie")
     public Response updateIndustrie(@FormParam("idIndustrie") int idIndustrie,
                                     @FormParam("raisonSocialeIndustrie") String raisonSocialeSociale,
-                                    @FormParam("siretIndustrie") int siretIndustrie) {
+                                    @FormParam("siretIndustrie") long siretIndustrie) {
         IndustrieAccess industrie = new IndustrieAccess(DatabaseAccess.getInstance());
         boolean industrieSuccess = industrie.updateIndustrie(idIndustrie, raisonSocialeSociale, siretIndustrie);
         if (industrieSuccess) {
