@@ -18,21 +18,18 @@ public class FraisResource {
     public Response createFrais(@FormParam("dateFrais") Date dateFrais,
                                 @FormParam("montantFrais") float montantFrais,
                                 @FormParam("rembourseFrais") boolean rembourseFrais,
-                                @FormParam("idAuditeur") int idAuditeur,
                                 @FormParam("idAudit") int idAudit,
                                 @FormParam("idCategorieFrais") int idCategorieFrais) {
         FraisAccess fraisAccess = new FraisAccess(DatabaseAccess.getInstance());
-        AuditeurAccess auditeurAccess = new AuditeurAccess(DatabaseAccess.getInstance());
         AuditAccess auditAccess = new AuditAccess(DatabaseAccess.getInstance());
         CategorieFraisAccess categorieFraisAccess = new CategorieFraisAccess(DatabaseAccess.getInstance());
-        int idFrais = fraisAccess.addFrais(dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais);
+        int idFrais = fraisAccess.addFrais(dateFrais, montantFrais, rembourseFrais, idAudit, idCategorieFrais);
         if (idFrais == 0) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Impossible de créer le frais").build();
         }
-        Auditeur auditeur = auditeurAccess.getAuditeurById(idAuditeur);
         Audit audit = auditAccess.getAuditById(idAudit);
         CategorieFrais categorieFrais = categorieFraisAccess.getCategorieFraisById(idCategorieFrais);
-        Frais frais = new Frais(idFrais, dateFrais, montantFrais, rembourseFrais, auditeur, audit, categorieFrais);
+        Frais frais = new Frais(idFrais, dateFrais, montantFrais, rembourseFrais, audit, categorieFrais);
         return Response.status(Response.Status.CREATED).entity(frais).build();
     }
 
@@ -43,11 +40,10 @@ public class FraisResource {
                                 @FormParam("dateFrais") Date dateFrais,
                                 @FormParam("montantFrais") float montantFrais,
                                 @FormParam("rembourseFrais") boolean rembourseFrais,
-                                @FormParam("idAuditeur") int idAuditeur,
                                 @FormParam("idAudit") int idAudit,
                                 @FormParam("idCategorieFrais") int idCategorieFrais) {
         FraisAccess fraisAccess = new FraisAccess(DatabaseAccess.getInstance());
-        boolean fraisSuccess = fraisAccess.updateFrais(idFrais, dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais);
+        boolean fraisSuccess = fraisAccess.updateFrais(idFrais, dateFrais, montantFrais, rembourseFrais, idAudit, idCategorieFrais);
         if (fraisSuccess) {
             return Response.status(Response.Status.OK).entity(fraisSuccess).build();
         } else {

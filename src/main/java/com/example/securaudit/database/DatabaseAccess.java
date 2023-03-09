@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class DatabaseAccess implements AutoCloseable {
     private static final String HOST = "jdbc:mysql://localhost:3306/securaudit?connectTimeout=3000&useSSL=false&allowPublicKeyRetrieval=true";
     private static final String USER = "root";
-    private static final String PASSWORD = "toto1234";
+    private static final String PASSWORD = "Ifen76srfc35";
     private static DatabaseAccess instance = null;
     private Connection connection;
 

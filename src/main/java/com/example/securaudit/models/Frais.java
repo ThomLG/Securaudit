@@ -9,15 +9,13 @@ public class Frais {
     float montantFrais;
     boolean rembourseFrais;
     CategorieFrais categorieFrais;
-    Auditeur auditeur;
     Audit audit;
 
-    public Frais(int idFrais, Date dateFrais, float montantFrais, boolean rembourseFrais, Auditeur auditeur, Audit audit, CategorieFrais categorieFrais) {
+    public Frais(int idFrais, Date dateFrais, float montantFrais, boolean rembourseFrais, Audit audit, CategorieFrais categorieFrais) {
         this.idFrais = idFrais;
         this.dateFrais = dateFrais;
         this.montantFrais = montantFrais;
         this.rembourseFrais = rembourseFrais;
-        this.auditeur = auditeur;
         this.audit = audit;
         this.categorieFrais = categorieFrais;
     }
@@ -64,14 +62,6 @@ public class Frais {
 
     public void setMontantFrais(float montantFrais) {
         this.montantFrais = montantFrais;
-    }
-
-    public Auditeur getAuditeur() {
-        return auditeur;
-    }
-
-    public void setAuditeur(Auditeur auditeur) {
-        this.auditeur = auditeur;
     }
 
     public Audit getAudit() {

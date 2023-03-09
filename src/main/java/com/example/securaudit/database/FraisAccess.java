@@ -6,10 +6,10 @@ import java.sql.*;
 
 public class FraisAccess {
     private final DatabaseAccess db;
-    private final String INSERT = "INSERT INTO Frais (dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais) VALUES(?, ?, ?, ? , ?, ?) ";
+    private final String INSERT = "INSERT INTO Frais (dateFrais, montantFrais, rembourseFrais, idAudit, idCategorieFrais) VALUES(?, ?, ? , ?, ?) ";
     private final String DELETE = "DELETE FROM Frais WHERE idFrais = ?";
-    private final String UPDATE = "UPDATE Frais SET dateFrais=?, montantFrais=?, rembourseFrais=?, idAuditeur=?, idAudit=?, idCategorieFrais=? WHERE idFrais = ?";
-    private final String GETBYID = "SELECT idFrais, dateFrais, montantFrais, rembourseFrais, idAuditeur, idAudit, idCategorieFrais" +
+    private final String UPDATE = "UPDATE Frais SET dateFrais=?, montantFrais=?, rembourseFrais=?, idAudit=?, idCategorieFrais=? WHERE idFrais = ?";
+    private final String GETBYID = "SELECT idFrais, dateFrais, montantFrais, rembourseFrais, idAudit, idCategorieFrais" +
             " FROM Frais " +
             "WHERE idFrais = ? ";
 
@@ -32,19 +32,16 @@ public class FraisAccess {
         ) {
             statement.setInt(1, idFrais);
             ResultSet result = statement.executeQuery();
-            AuditeurAccess auditorAcess = new AuditeurAccess(db);
             AuditAccess auditAccess = new AuditAccess(db);
             CategorieFraisAccess categAccess = new CategorieFraisAccess(db);
             if (result.next()) {
-                Auditeur auditeur = auditorAcess.getAuditeurById(result.getInt(5));
-                Audit audit = auditAccess.getAuditById(result.getInt(6));
-                CategorieFrais categ = categAccess.getCategorieFraisById(result.getInt(7));
+                Audit audit = auditAccess.getAuditById(result.getInt(5));
+                CategorieFrais categ = categAccess.getCategorieFraisById(result.getInt(6));
                 Frais frais = new Frais(
                         result.getInt(1),
                         result.getDate(2),
                         result.getFloat(3),
                         result.getBoolean(4),
-                        auditeur,
                         audit,
                         categ
                 );
@@ -61,21 +58,19 @@ public class FraisAccess {
      * @param dateFrais La date du frais
      * @param montantFrais Le montant du frais
      * @param rembourseFrais Le frais a été remboursé ?
-     * @param idAuditeur L'id de l'auditeur auteur du frais
      * @param idAudit L'id de l'audit engendrant le frais
      * @param idCategorieFrais L'id de la catégorie du frais
      * @return L'id du frais nouvellement créé, 0 sinon
      */
-    public int addFrais(Date dateFrais, float montantFrais, boolean rembourseFrais, int idAuditeur, int idAudit, int idCategorieFrais) {
+    public int addFrais(Date dateFrais, float montantFrais, boolean rembourseFrais, int idAudit, int idCategorieFrais) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setDate(1, dateFrais);
             statement.setFloat(2, montantFrais);
             statement.setBoolean(3, rembourseFrais);
-            statement.setInt(4, idAuditeur);
-            statement.setInt(5, idAudit);
-            statement.setInt(6, idCategorieFrais);
+            statement.setInt(4, idAudit);
+            statement.setInt(5, idCategorieFrais);
             statement.executeUpdate();
             ResultSet result = statement.getGeneratedKeys();
             if (result.next()) {
@@ -113,22 +108,20 @@ public class FraisAccess {
      * @param dateFrais La nouvelle date du frais
      * @param montantFrais Le nouveau montant du frais
      * @param rembourseFrais true si remboursé, false sinon
-     * @param idAuditeur Le nouvel id de l'auditeur auteur du frais
      * @param idAudit Le nouvel id de l'audit engendrant le frais
      * @param idCategorieFrais Le nouvel id de la catégorie de frais
      * @return true si modifié, false sinon
      */
-    public boolean updateFrais(int idFrais, Date dateFrais, float montantFrais, boolean rembourseFrais, int idAuditeur, int idAudit, int idCategorieFrais) {
+    public boolean updateFrais(int idFrais, Date dateFrais, float montantFrais, boolean rembourseFrais, int idAudit, int idCategorieFrais) {
         try (
                 PreparedStatement statement = db.getConnection().prepareStatement(UPDATE);
         ) {
             statement.setDate(1, dateFrais);
             statement.setFloat(2, montantFrais);
             statement.setBoolean(3, rembourseFrais);
-            statement.setInt(4, idAuditeur);
-            statement.setInt(5, idAudit);
-            statement.setInt(6, idCategorieFrais);
-            statement.setInt(7, idFrais);
+            statement.setInt(4, idAudit);
+            statement.setInt(5, idCategorieFrais);
+            statement.setInt(6, idFrais);
             statement.executeUpdate();
             int updatedLinesNumber = statement.executeUpdate();
             if (updatedLinesNumber > 0) {
