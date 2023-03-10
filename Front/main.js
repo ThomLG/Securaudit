@@ -97,3 +97,8 @@ function updateFrais(form) {
 function deleteFraisByID(form) {
     handleResponse(fetchWithQueryParams('frais/deleteFrais', 'DELETE', form));
 }
+
+function load(page) {
+    let routeur = document.getElementById('routeur');
+    fetch(page).then(html => html.text()).then(text => routeur.innerHTML = text);
+}
