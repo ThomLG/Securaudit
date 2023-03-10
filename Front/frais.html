@@ -1,0 +1,77 @@
+<h2>Frais</h2>
+    <h3>Récupérer un frais</h3>
+    <form>
+        <div>
+            <label for="idFraisGet">ID du frais :</label>
+            <input id="idFraisGet" name="idFrais" />
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Voir le frais" onClick="getFraisByID(this.form)">
+        </div>
+    </form>
+    <h3>Ajouter un frais</h3>
+    <form>
+        <div>
+            <label for="dateFraisAdd">Date :</label>
+            <input type="date" id="dateFraisAdd" name="dateFrais"/>
+        </div>
+        <div>
+            <label for="montantFraisAdd">Montant :</label>
+            <input id="montantFraisAdd" name="montantFrais"/>
+        </div>
+        <div>
+            <label for="rembourseFraisAdd">Remboursé :</label>
+            <input type="checkbox" id="rembourseFraisAdd" name="rembourseFrais"/>
+        </div>
+        <div>
+            <label for="idAuditFraisAdd">ID de l'audit :</label>
+            <input id="idAuditFraisAdd" name="idAudit"/>
+        </div>
+        <div>
+            <label for="idCategorieFraisFraisAdd">ID de la catégorie de frais :</label>
+            <input id="idCategorieFraisFraisAdd" name="idCategorieFrais"/>
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Ajouter le frais" onClick="addFrais(this.form)">
+        </div>
+    </form>
+    <h3>Modifier un frais</h3>
+    <form>
+        <div>
+            <label for="idFraisUpdate">ID du frais :</label>
+            <input id="idFraisUpdate" name="idFrais" />
+        </div>
+        <div>
+            <label for="dateFraisUpdate">Date :</label>
+            <input type="date" id="dateFraisUpdate" name="dateFrais"/>
+        </div>
+        <div>
+            <label for="montantFraisUpdate">Montant :</label>
+            <input id="montantFraisUpdate" name="montantFrais"/>
+        </div>
+        <div>
+            <label for="rembourseFraisUpdate">Remboursé :</label>
+            <input type="checkbox" id="rembourseFraisUpdate" name="rembourseFrais"/>
+        </div>
+        <div>
+            <label for="idAuditFraisUpdate">ID de l'audit :</label>
+            <input id="idAuditFraisUpdate" name="idAudit"/>
+        </div>
+        <div>
+            <label for="idCategorieFraisFraisUpdate">ID de la catégorie de frais :</label>
+            <input id="idCategorieFraisFraisUpdate" name="idCategorieFrais"/>
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Modifier le frais" onClick="updateFrais(this.form)">
+        </div>
+    </form>
+    <h3>Supprimer un frais</h3>
+    <form>
+        <div>
+            <label for="idFraisDelete">ID du frais :</label>
+            <input id="idFraisDelete" name="idFrais" />
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Supprimer le frais" onClick="deleteFraisByID(this.form)">
+        </div>
+    </form>

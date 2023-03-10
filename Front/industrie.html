@@ -1,0 +1,53 @@
+<h2>Industrie</h2>
+    <h3>Récupérer une industrie</h3>
+    <form>
+        <div>
+            <label for="idIndustrieGet">ID de l'industrie :</label>
+            <input id="idIndustrieGet" name="idIndustrie" />
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Voir l'industrie" onClick="getIndustrieByID(this.form)">
+        </div>
+    </form>
+    <h3>Ajouter une industrie</h3>
+    <form>
+        <div>
+            <label for="raisonSocialeIndustrieAdd">Raison Sociale :</label>
+            <input id="raisonSocialeIndustrieAdd" name="raisonSocialeIndustrie"/>
+        </div>
+        <div>
+            <label for="siretIndustrieAdd">SIRET :</label>
+            <input id="siretIndustrieAdd" name="siretIndustrie"/>
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Ajouter l'industrie" onClick="addIndustrie(this.form)">
+        </div>
+    </form>
+    <h3>Modifier une industrie</h3>
+    <form>
+        <div>
+            <label for="idIndustrieUpdate">ID de l'industrie :</label>
+            <input id="idIndustrieUpdate" name="idIndustrie" />
+        </div>
+        <div>
+            <label for="raisonSocialeIndustrieUpdate">Raison sociale :</label>
+            <input id="raisonSocialeIndustrieUpdate" name="raisonSocialeIndustrie"/>
+        </div>
+        <div>
+            <label for="siretIndustrieUpdate">SIRET :</label>
+            <input id="siretIndustrieUpdate" name="siretIndustrie"/>
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Modifier l'industrie" onClick="updateIndustrie(this.form)">
+        </div>
+    </form>
+    <h3>Supprimer une industrie</h3>
+    <form>
+        <div>
+            <label for="idIndustrieDelete">ID de l'industrie :</label>
+            <input id="idIndustrieDelete" name="idIndustrie" />
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Supprimer l'industrie" onClick="deleteIndustrieByID(this.form)">
+        </div>
+    </form>

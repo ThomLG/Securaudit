@@ -1,0 +1,77 @@
+<h2>Audit</h2>
+    <h3>Récupérer un audit</h3>
+    <form>
+        <div>
+            <label for="idAuditGet">ID de l'audit :</label>
+            <input id="idAuditGet" name="idAudit" />
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Voir l'audit" onClick="getAuditByID(this.form)">
+        </div>
+    </form>
+    <h3>Ajouter un audit</h3>
+    <form>
+        <div>
+            <label for="dateDebutAuditAdd">Date de début :</label>
+            <input type="date" id="dateDebutAuditAdd" name="dateDebutAudit"/>
+        </div>
+        <div>
+            <label for="dureeAuditAdd">Durée (en jours) :</label>
+            <input id="dureeAuditAdd" name="dureeAudit"/>
+        </div>
+        <div>
+            <label for="coutJournalierAuditAdd">Coût journalier :</label>
+            <input id="coutJournalierAuditAdd" name="coutJournalierAudit"/>
+        </div>
+        <div>
+            <label for="idIndustrieAuditAdd">ID de l'industrie :</label>
+            <input id="idIndustrieAuditAdd" name="idIndustrie"/>
+        </div>
+        <div>
+            <label for="idAuditeurAuditAdd">ID de l'auditeur :</label>
+            <input id="idAuditeurAuditAdd" name="idAuditeur"/>
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Ajouter l'audit" onClick="addAudit(this.form)">
+        </div>
+    </form>
+    <h3>Modifier un audit</h3>
+    <form>
+        <div>
+            <label for="idAuditUpdate">ID de l'audit :</label>
+            <input id="idAuditUpdate" name="idAudit" />
+        </div>
+        <div>
+            <label for="dateDebutAuditUpdate">Date de début :</label>
+            <input type="date" id="dateDebutAuditUpdate" name="dateDebutAudit"/>
+        </div>
+        <div>
+            <label for="dureeAuditUpdate">Durée (en jours) :</label>
+            <input id="dureeAuditUpdate" name="dureeAudit"/>
+        </div>
+        <div>
+            <label for="coutJournalierAuditUpdate">Coût journalier :</label>
+            <input id="coutJournalierAuditUpdate" name="coutJournalierAudit"/>
+        </div>
+        <div>
+            <label for="idIndustrieAuditUpdate">ID de l'industrie :</label>
+            <input id="idIndustrieAuditUpdate" name="idIndustrie"/>
+        </div>
+        <div>
+            <label for="idAuditeurAuditUpdate">ID de l'auditeur :</label>
+            <input id="idAuditeurAuditUpdate" name="idAuditeur"/>
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Modifier l'audit" onClick="updateAudit(this.form)">
+        </div>
+    </form>
+    <h3>Supprimer un audit</h3>
+    <form>
+        <div>
+            <label for="idAuditDelete">ID de l'audit :</label>
+            <input id="idAuditDelete" name="idAudit" />
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Supprimer l'audit" onClick="deleteAuditByID(this.form)">
+        </div>
+    </form>

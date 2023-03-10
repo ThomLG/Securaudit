@@ -1,0 +1,61 @@
+<h2>Auditeur</h2>
+    <h3>Récupérer un auditeur</h3>
+    <form>
+        <div>
+            <label for="idAuditeurGet">ID de l'auditeur :</label>
+            <input id="idAuditeurGet" name="idAuditeur" />
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Voir l'auditeur" onClick="getAuditeurByID(this.form)">
+        </div>
+    </form>
+    <h3>Ajouter un auditeur</h3>
+    <form>
+        <div>
+            <label for="nomAuditeurAdd">Nom :</label>
+            <input id="nomAuditeurAdd" name="nomAuditeur"/>
+        </div>
+        <div>
+            <label for="prenomAuditeurAdd">Prénom :</label>
+            <input id="prenomAuditeurAdd" name="prenomAuditeur"/>
+        </div>
+        <div>
+            <label for="idCiviliteAdd">ID civilité :</label>
+            <input id="idCiviliteAdd" name="civiliteAuditeur"/>
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Ajouter l'auditeur" onClick="addAuditeur(this.form)">
+        </div>
+    </form>
+    <h3>Modifier un auditeur</h3>
+    <form>
+        <div>
+            <label for="idAuditeurUpdate">ID de l'auditeur :</label>
+            <input id="idAuditeurUpdate" name="idAuditeur" />
+        </div>
+        <div>
+            <label for="nomAuditeurUpdate">Nom :</label>
+            <input id="nomAuditeurUpdate" name="nomAuditeur"/>
+        </div>
+        <div>
+            <label for="prenomAuditeurUpdate">Prénom :</label>
+            <input id="prenomAuditeurUpdate" name="prenomAuditeur"/>
+        </div>
+        <div>
+            <label for="idCiviliteUpdate">ID civilité :</label>
+            <input id="idCiviliteUpdate" name="civiliteAuditeur"/>
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Modifier l'auditeur" onClick="updateAuditeur(this.form)">
+        </div>
+    </form>
+    <h3>Supprimer un auditeur</h3>
+    <form>
+        <div>
+            <label for="idAuditeurDelete">ID de l'auditeur :</label>
+            <input id="idAuditeurDelete" name="idAuditeur" />
+        </div>
+        <div class="submit-bloc">
+            <input type="button" value="Supprimer l'auditeur" onClick="deleteAuditeurByID(this.form)">
+        </div>
+    </form>
